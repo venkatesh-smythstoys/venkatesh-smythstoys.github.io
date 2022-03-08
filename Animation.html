@@ -3,19 +3,22 @@
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 <script src="js/aframe.min.js"></script>
 <script src="js/aframe-ar.js"></script>
+<!-- support 3D text -->
+<script src="js/aframe-text-geometry-component.min.js"></script>
+	
 <body style="margin: 0px; overflow: hidden;">
-
 <a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false;">
-
-    <a-assets>
+    <a-assets> 
 		<img id="earth-sphere" src="images/earth-sphere.jpg" />
-	</a-assets>
-
-    <!-- 
-    for more info, see: https://aframe.io/docs/1.0.0/components/animation.html 
-    for more examples:  https://stemkoski.github.io/A-Frame-Examples/animation.html
-    -->
+    </a-assets>
+	
+    <!-- 2D text -->
+	<a-marker type="pattern" url="data/kanji.patt">
+		<a-plane color="white" rotation="-90 0 0" position="0 -0.25 0" width="3" material="transparent: true; opacity: 0.90"></a-plane>
+		<a-text value="Hello, world!" font="fonts/Exo2Bold.fnt" color="red" rotation="-90 0 0" align="center" scale="2 2 2"></a-text>
+	</a-marker>	
     
+	<!-- spinning earth -->
     <a-marker type="pattern" url="data/kanji.patt">
         <a-sphere position="0 0.5 0" 
                material="src: #earth-sphere; transparent: true; opacity: 0.95;"
