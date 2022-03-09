@@ -36,8 +36,23 @@
 	
     <!-- 2D text -->
 	<a-marker type="pattern" url="data/hiro.patt">
-		<a-plane color="white" rotation="-90 0 0" position="0 -0.25 0" width="4" material="transparent: true; opacity: 0.80"></a-plane>
+		<a-plane color="white" rotation="-90 0 0" position="0 -0.25 0" width="5" material="transparent: true; opacity: 0.80"></a-plane>
 		<a-text update-text value="" font="fonts/Exo2Bold.fnt" color="lightblue" rotation="-90 0 0" align="center" scale="2 2 2"></a-text>
+		<a-entity 
+		    position="0 0 0" 
+		    particle-system="
+			texture: images/particles/star.png;
+			color: #FF0000, #FFFF00; 
+			size: 1, 0;
+			velocityValue: 0.001 0.001 0.001;
+			velocitySpread: 0.5 0 0.5; 
+			accelerationValue: 0.001 0.001 0.001;
+			accelerationSpread: 0.001 0.001 0.001;
+			rotationAngle: 0; 
+			blending: 1;
+			particleCount: 200;
+			maxAge: 5; ">
+		</a-entity>
 	</a-marker>	
   
   <!-- slpashing stars -->
