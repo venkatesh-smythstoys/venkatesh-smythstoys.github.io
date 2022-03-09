@@ -10,7 +10,8 @@
 <script type="text/javascript">
   var url_string = window.location.href
   var url = new URL(url_string);
-  this.name = url.searchParams.get("name");
+  var name = url.searchParams.get("name");
+  document.getElementById("nameElm").value="Hello " + name + "!!!";	
 </script>  
 <body style="margin: 0px; overflow: hidden;">
 <a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false;">
@@ -21,7 +22,7 @@
     <!-- 2D text -->
 	<a-marker type="pattern" url="data/hiro.patt">
 		<a-plane color="white" rotation="-90 0 0" position="0 -0.25 0" width="3" material="transparent: true; opacity: 0.90"></a-plane>
-		<a-text value="Hello, ${name}!!!" font="fonts/Exo2Bold.fnt" color="red" rotation="-90 0 0" align="center" scale="2 2 2"></a-text>
+		<a-text id="nameElm" value="Hello, ${name}!!!" font="fonts/Exo2Bold.fnt" color="red" rotation="-90 0 0" align="center" scale="2 2 2"></a-text>
 	</a-marker>	
   
   <!-- slpashing stars -->
