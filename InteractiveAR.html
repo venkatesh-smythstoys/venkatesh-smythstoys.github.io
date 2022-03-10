@@ -8,16 +8,15 @@
     <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
    
     <body style='margin : 0px; overflow: hidden;'>
-	   <script type="text/javascript">
+	   <script>
 			AFRAME.registerComponent('markerhandler', {
 				init: function() {
-					setTimeout(function() {
 						const animatedMarker = document.querySelector("#animated-marker");
 						const aEntity = document.querySelector("#animated-model");
 
 						// every click, we make our model grow in size :)
-						animatedMarker.addEventListener('click', function(ev, target){
-							alert("Click captured");
+						this.el.addEventListener('click', function(ev, target){
+							alert("Marker click captured");
 								const intersectedElement = ev && ev.detail && ev.detail.intersectedEl;
 								if (aEntity && intersectedElement === aEntity) {
 										const scale = aEntity.getAttribute('scale');
@@ -28,9 +27,23 @@
 					aEntity.addEventListener('click', function(ev, target){
 						ev.preventEventDefault();
 						alert("image click");
-					});
-				}, 1000);
-					
+					});					
+		}});
+		   AFRAME.registerComponent('planehandler', {
+				init: function() {
+						const animatedMarker = document.querySelector("#animated-marker");
+						const aEntity = document.querySelector("#animated-model");
+
+						// every click, we make our model grow in size :)
+						this.el.addEventListener('click', function(ev, target){
+							alert("Plane click captured");
+							const intersectedElement = ev && ev.detail && ev.detail.intersectedEl;
+							if (aEntity && intersectedElement === aEntity) {
+									const scale = aEntity.getAttribute('scale');
+									Object.keys(scale).forEach((key) => scale[key] = scale[key] + 1);
+									aEntity.setAttribute('scale', scale);
+							}
+						});					
 		}});
 		</script>	 
         <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
@@ -46,7 +59,7 @@
                 gltf-model="#animated-asset"
                 scale="2">
             </a-entity>-->
-				<a-plane id="animated-model"
+				<a-plane planehandler id="animated-model"
                position="0 0.5 0"
 							 rotation="-90 0 0"				 
                material="src: #animated-asset; transparent: true; opacity: 0.95;" >
