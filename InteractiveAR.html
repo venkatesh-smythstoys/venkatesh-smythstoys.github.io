@@ -16,6 +16,7 @@
 
 						// every click, we make our model grow in size :)
 						animatedMarker.addEventListener('click', function(ev, target){
+							alert("Click captured");
 								const intersectedElement = ev && ev.detail && ev.detail.intersectedEl;
 								if (aEntity && intersectedElement === aEntity) {
 										const scale = aEntity.getAttribute('scale');
@@ -29,7 +30,7 @@
         <a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false;">
         <a-assets>
 					<!--<a-asset-item id="animated-asset" src="https://raw.githubusercontent.com/nicolocarpignoli/nicolocarpignoli.github.io/master/ar-click-events/models/CesiumMan.gltf"></a-asset-item>-->
-	<img id="earth-sphere" src="images/toys_catalogue.jpg" />
+					<img id="animated-asset" src="images/toys_catalogue.jpg" />
         </a-assets>
 
         <a-marker markerhandler emitevents="true" cursor="rayOrigin: mouse" id="animated-marker" type="pattern" url="data/hiro.patt">
@@ -38,10 +39,11 @@
                 gltf-model="#animated-asset"
                 scale="2">
             </a-entity>-->
-					<a-sphere 
-               position="0 0.5 0" 
+				<a-plane id="animated-model"
+               position="0 0.5 0"
+							 rotation="-90 0 0"				 
                material="src: #animated-asset; transparent: true; opacity: 0.95;" >
-        </a-sphere>
+        </a-plane>
         </a-marker>
 
         <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
