@@ -3,41 +3,57 @@
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 <script src="js/aframe.min.js"></script>
 <script src="js/aframe-ar.js"></script>
-<particle(splash) effect -->  
-<script src="js/aframe-particle-system-component.js"></script>  
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 <script type="text/javascript">
   var url_string = window.location.href
   var url = new URL(url_string);
   let name = url.searchParams.get("name");
-  AFRAME.registerComponent('update-text', {
-		init: function() {
-			var el = this.el;
-			this.ready = false;
-				el.addEventListener('textfontset', function() {
-				this.ready = true;
-			}.bind(this));
-		},
-		tick: function() {
-			var el = this.el;
-			if (!this.ready) {
-				return;
+  AFRAME.registerComponent('markerhandler', {
+
+    init: function() {
+        const animatedMarker = document.querySelector("#animated-marker");
+        const aEntity = document.querySelector("#animated-model");
+
+        // every click, we make our model grow in size :)
+        animatedMarker.addEventListener('click', function(ev, target){
+            const intersectedElement = ev && ev.detail && ev.detail.intersectedEl;
+            if (aEntity && intersectedElement === aEntity) {
+                swal({
+			title: "",
+			text: "Do you like our smythstoys catalogue?",
+			icon: "info",
+			buttons: ["No", "Yes"]
+		}).then(function(action) {
+			if(action) {
+				swal({
+					title: "",
+					text: "Thank you!!!",
+					icon: "success"
+				});
+			} else {
+				swal({
+					title: "",
+					text: "Oops, we will try to improve our catalogue",
+					icon: "info"
+				});
 			}
-			el.setAttribute('value', "Hello, " + name + "!!!");
-		}
-	});	
+		});
+            }
+        });
+}});	
 </script>  
 <body style="margin: 0px; overflow: hidden;">
 <a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false;">	
     <a-assets>
-        <img id="test_img" src="url of the image you want to show">
+        <img id="catalogue_img" src="images/toys_catalogue.jpg">
     </a-assets>
-    <a-marker preset="hiro" url="data/hiro.patt">
+    <a-marker markerhandler emitevents="true" cursor="rayOrigin: mouse" preset="hiro" url="data/hiro.patt">
         <a-image 
             rotation="90 0 0"
-            src="#text_img"></a-image>
+            src="#catalogue_img"></a-image>
     </a-marker>
     <a-entity camera></a-entity>
-    
 </a-scene>
 </body>
 </html>
