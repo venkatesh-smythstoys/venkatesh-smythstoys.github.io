@@ -5,6 +5,7 @@
     </head>
     <script src="js/aframe.min.js"></script>
 		<script src="js/aframe-ar.js"></script>
+		<script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script> 
     <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
    
     <body style='margin : 0px; overflow: hidden;'>
@@ -55,7 +56,7 @@
         </a-marker>
 
         <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
-        <a-entity camera></a-entity>
+        <a-entity camera look-controls mouse-cursor></a-entity>
         </a-scene>
     </body>
 </html>
