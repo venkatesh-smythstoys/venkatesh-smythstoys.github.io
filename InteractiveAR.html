@@ -1,1 +1,43 @@
-
+<!doctype HTML>
+<html>
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<script src="js/aframe.min.js"></script>
+<script src="js/aframe-ar.js"></script>
+<particle(splash) effect -->  
+<script src="js/aframe-particle-system-component.js"></script>  
+<script type="text/javascript">
+  var url_string = window.location.href
+  var url = new URL(url_string);
+  let name = url.searchParams.get("name");
+  AFRAME.registerComponent('update-text', {
+		init: function() {
+			var el = this.el;
+			this.ready = false;
+				el.addEventListener('textfontset', function() {
+				this.ready = true;
+			}.bind(this));
+		},
+		tick: function() {
+			var el = this.el;
+			if (!this.ready) {
+				return;
+			}
+			el.setAttribute('value', "Hello, " + name + "!!!");
+		}
+	});	
+</script>  
+<body style="margin: 0px; overflow: hidden;">
+<a-scene embedded vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false;">	
+    <a-assets>
+        <img id="test_img" src="url of the image you want to show">
+    </a-assets>
+    <a-marker preset="hiro" url="data/hiro.patt">
+        <a-image 
+            rotation="90 0 0"
+            src="#text_img"></a-image>
+    </a-marker>
+    <a-entity camera></a-entity>
+    
+</a-scene>
+</body>
+</html>
