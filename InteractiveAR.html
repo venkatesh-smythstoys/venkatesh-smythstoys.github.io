@@ -17,6 +17,7 @@
 						// every click, we make our model grow in size :)
 						this.el.addEventListener('click', function(ev, target){
 							alert("Marker click captured");
+							ev.preventEventDefault();
 								const intersectedElement = ev && ev.detail && ev.detail.intersectedEl;
 								if (aEntity && intersectedElement === aEntity) {
 										const scale = aEntity.getAttribute('scale');
@@ -45,7 +46,7 @@
 								geometry="primitive: plane"			
                 material="src: #animated-asset; shader: flat; transparent: true; opacity: 0.95;" scale="2">
             </a-entity>
-				<!--<a-plane planehandler id="animated-model"
+				<!--<a-plane id="animated-model"
                position="0 0.5 0"
 							 rotation="-90 0 0"				 
                material="src: #animated-asset; transparent: true; opacity: 0.95;" >
