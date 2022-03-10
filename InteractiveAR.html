@@ -24,12 +24,13 @@
 										Object.keys(scale).forEach((key) => scale[key] = scale[key] + 1);
 										aEntity.setAttribute('scale', scale);
 								}
-						});
-					aEntity.addEventListener('click', function(ev, target){
-						ev.preventEventDefault();
-						alert("image click");
-					});					
+						});		
 		}});
+		AFRAME.registerComponent("planehandler", {
+			init: function() {
+				this.el.addEventListener("click", (e)=>{alert("HELLO")});
+			}
+    });
 		</script>	 
         <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
         <a-scene embedded cursor="rayOrigin: mouse" vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false;">
@@ -38,19 +39,19 @@
 					<img id="animated-asset" src="images/toys_catalogue.jpg" />
         </a-assets>
 
-        <a-marker markerhandler emitevents="true" id="animated-marker" type="pattern" url="data/hiro.patt">
-            <a-entity planehandler
+        <a-marker markerhandler id="animated-marker" type="pattern" url="data/hiro.patt">
+            <!--<a-entity
                 id="animated-model"
 								position="0 0.5 0"
 							 	rotation="-90 0 0"				
 								geometry="primitive: plane"			
                 material="src: #animated-asset; shader: flat; transparent: true; opacity: 0.95;" scale="2">
-            </a-entity>
-				<!--<a-plane id="animated-model"
-               position="0 0.5 0"
-							 rotation="-90 0 0"				 
-               material="src: #animated-asset; transparent: true; opacity: 0.95;" >
-        </a-plane>-->
+            </a-entity>->
+						<a-plane planehandler id="animated-model"
+									 position="0 0.5 0"
+									 rotation="-90 0 0"				 
+									 material="src: #animated-asset; transparent: true; opacity: 0.95;" >
+						</a-plane>
         </a-marker>
 
         <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
