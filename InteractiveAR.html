@@ -6,7 +6,6 @@
     <script src="js/aframe.min.js"></script>
 		<script src="js/aframe-ar.js"></script>
 		<script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script> 
-    <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
    
     <body style='margin : 0px; overflow: hidden;'>
 	   <script>
@@ -18,13 +17,13 @@
 						// every click, we make our model grow in size :)
 						this.el.addEventListener('click', function(ev, target){
 							alert("Marker click captured");
-							ev.preventEventDefault();
+							/*ev.preventEventDefault();
 								const intersectedElement = ev && ev.detail && ev.detail.intersectedEl;
 								if (aEntity && intersectedElement === aEntity) {
 										const scale = aEntity.getAttribute('scale');
 										Object.keys(scale).forEach((key) => scale[key] = scale[key] + 1);
 										aEntity.setAttribute('scale', scale);
-								}
+								}*/
 						});		
 		}});
 		AFRAME.registerComponent("planehandler", {
@@ -56,7 +55,7 @@
         </a-marker>
 
         <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
-        <a-entity camera look-controls mouse-cursor></a-entity>
+        <a-entity camera></a-entity>
         </a-scene>
     </body>
 </html>
