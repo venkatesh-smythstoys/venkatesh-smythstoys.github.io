@@ -6,11 +6,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 <script type="text/javascript">
-  var url_string = window.location.href
-  var url = new URL(url_string);
-  let name = url.searchParams.get("name");
   AFRAME.registerComponent('markerhandler', {
-
     init: function() {
         const animatedMarker = document.querySelector("#animated-marker");
         const aEntity = document.querySelector("#animated-model");
@@ -20,25 +16,25 @@
             const intersectedElement = ev && ev.detail && ev.detail.intersectedEl;
             if (aEntity && intersectedElement === aEntity) {
                 swal({
-			title: "",
-			text: "Do you like our smythstoys catalogue?",
-			icon: "info",
-			buttons: ["No", "Yes"]
-		}).then(function(action) {
-			if(action) {
-				swal({
-					title: "",
-					text: "Thank you!!!",
-					icon: "success"
-				});
-			} else {
-				swal({
-					title: "",
-					text: "Oops, we will try to improve our catalogue",
-					icon: "info"
-				});
-			}
-		});
+									title: "",
+									text: "Do you like our smythstoys catalogue?",
+									icon: "info",
+									buttons: ["No", "Yes"]
+								}).then(function(action) {
+									if(action) {
+										swal({
+											title: "",
+											text: "Thank you!!!",
+											icon: "success"
+										});
+									} else {
+										swal({
+											title: "",
+											text: "Oops, we will try to improve our catalogue",
+											icon: "info"
+										});
+									}
+								});
             }
         });
 }});	
