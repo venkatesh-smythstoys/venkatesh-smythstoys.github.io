@@ -44,9 +44,9 @@
     <a-assets>
         <img id="catalogue_img" src="images/toys_catalogue.jpg">
     </a-assets>
-    <a-marker markerhandler emitevents="true" cursor="rayOrigin: mouse" preset="hiro" url="data/hiro.patt">
-        <a-image 
-            rotation="90 0 0"
+    <a-marker markerhandler emitevents="true" cursor="rayOrigin: mouse" id="animated-marker" preset="hiro" url="data/hiro.patt">
+        <a-image id="animated-model"
+            rotation="0 90 0"
             src="#catalogue_img"></a-image>
     </a-marker>
     <a-entity camera></a-entity>
