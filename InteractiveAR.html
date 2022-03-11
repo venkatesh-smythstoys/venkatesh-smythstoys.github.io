@@ -1,23 +1,109 @@
-<!doctype HTML>
 <html>
-<link rel="icon" href="data:;base64,iVBORw0KGgo=">
-<script src="js/aframe.min.js"></script>
-<script src="js/aframe-ar.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aframe-mouse-cursor-component@0.5.3/dist/aframe-mouse-cursor-component.min.js"></script>   
-<body style="margin: 0px; overflow: hidden;">
-<a-scene cursor="rayOrigin: mouse" arjs="debugUIEnabled: false" style="margin: 0; padding: 0; width: 100%; height: 100%; position: absolute" vr-mode-ui="enabled: false">
-   <a-marker preset="hiro">
-      <a-box scale="1 0.25 1" opacity="0.5"
-             event-set__mouseenter="color: red"
-             event-set__mouseleave="color: white"
-             event-set__mousedown="color: green"
-             event-set__mouseup="color: red"
-             animation="property: rotation; from: 0 0 0; to: 0 360 0; dur: 1000; startEvents: click">
-      </a-box>
-   </a-marker>
-   <a-entity look-controls mouse-cursor>
-   </a-entity>
-</a-scene>
-</body>
+  <script src="https://aframe.io/releases/1.0.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/jeromeetienne/AR.js/2.2.2/aframe/build/aframe-ar.min.js"></script>
+   
+  <script src="/cursor.js" defer></script>
+
+  <body style="margin : 0px; overflow: hidden;">
+    <script>
+       AFRAME.registerComponent('color-randomizer', {
+           init: function () {
+             let colors = ["red", "green", "blue", "lightblue", "orange", "cyan"]
+             var el = this.el;
+             el.addEventListener('click', (e) => {     
+               this.el.setAttribute('color', colors[Math.floor(Math.random() * colors.length)])
+             });
+           }
+         });
+       
+       /* a-frames bind */
+
+         var bind = function bind(fn, ctx /* , arg1, arg2 */) {
+           return (function(prependedArgs) {
+             return function bound() {
+               // Concat the bound function arguments with those passed to original bind
+               var args = prependedArgs.concat(Array.prototype.slice.call(arguments, 0));
+               return fn.apply(ctx, args);
+             };
+           })(Array.prototype.slice.call(arguments, 2));
+         };
+
+         /* * * * * * * * * * * * * * * * * * * * * *
+            wait until the cursor is ready and accessible
+         * * * * * * * * * * * * * * * * * * * * * * */
+         let marker = document.querySelector("[cursor]");
+         console.log(marker.hasLoaded);
+
+         /* * * * * * * * * * * * * * * * * * * * * *
+           replace the curosr.onMouseMove function
+         * * * * * * * * * * * * * * * * * * * * * * */
+         let cursorComponent = marker.components.cursor;
+         cursorComponent.onMouseMove = (function() {
+           console.warn("Cursor.onMouseMove is modified");
+           var direction = new THREE.Vector3();
+           var mouse = new THREE.Vector2();
+           var origin = new THREE.Vector3();
+           var rayCasterConfig = { origin: origin, direction: direction };
+           return function(evt) {
+             var bounds = this.canvasBounds;
+             var camera = this.el.sceneEl.camera;
+             var left;
+             var point;
+             var top;
+
+             camera.parent.updateMatrixWorld();
+
+             // Calculate mouse position based on the canvas element
+             if (evt.type === "touchmove" || evt.type === "touchstart") {
+               // Track the first touch for simplicity.
+               point = evt.touches.item(0);
+             } else {
+               point = evt;
+             }
+
+             left = point.clientX - bounds.left;
+             top = point.clientY - bounds.top;
+             mouse.x = (left / bounds.width) * 2 - 1;
+             mouse.y = -(top / bounds.height) * 2 + 1;
+             origin.setFromMatrixPosition(camera.matrixWorld);
+             let matrix = new THREE.Matrix4();
+
+             /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+               The only part we want to modify is the direction calculations
+             * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+             direction
+               .set(mouse.x, mouse.y, 0.5)
+               .applyMatrix4(matrix.getInverse(camera.projectionMatrix))
+               .applyMatrix4(camera.matrixWorld)
+               .sub(origin)
+               .normalize();
+
+             this.el.setAttribute("raycaster", rayCasterConfig);
+             if (evt.type === "touchmove") {
+               evt.preventDefault();
+             }
+           };
+         })();
+
+         /* * * * * * * * * * * * * * * * * * * * * *
+                        bind the context
+         * * * * * * * * * * * * * * * * * * * * * * */
+         cursorComponent.onMouseMove = bind(
+           cursorComponent.onMouseMove,
+           cursorComponent
+         );
+
+         /* * * * * * * * * * * * * * * * * * * * * *
+           Update the components event listeners
+         * * * * * * * * * * * * * * * * * * * * * * */
+         cursorComponent.updateMouseEventListeners();
+
+     </script>
+    <a-scene embedded arjs>
+      <a-marker preset="hiro" cursor="rayOrigin: mouse" raycaster="objects: a-box">
+        <a-box position="0 0.5 0" color-randomizer></a-box>
+      </a-marker>
+      <a-entity camera></a-entity>
+    </a-scene>
+  </body>
 </html>
-  
