@@ -8,20 +8,28 @@
    
     <body style='margin : 0px; overflow: hidden;'>
 	   <script>
-      AFRAME.registerComponent("markerHandler", {
-        init: function() {
-          var questionDiv = document.querySelector("#idQuestionDiv");
-          this.el.sceneEl.addEventListener("markerFound", (e)=>{
-            questionDiv.hidden = false;
-          });
-          this.el.sceneEl.addEventListener("markerLost", (e)=>{
-            questionDiv.hidden = true;
-          });
-        }
-      });
+				AFRAME.registerComponent("markerHandler", {
+					init: function() {
+						debugger;
+						var questionDiv = document.querySelector("#idQuestionDiv");
+						this.el.sceneEl.addEventListener("markerFound", (e)=>{
+							debugger;
+							questionDiv.hidden = false;
+						});
+						this.el.sceneEl.addEventListener("markerLost", (e)=>{
+							debugger;
+							questionDiv.hidden = true;
+						});
+					}
+				});
 		</script>	 
+			
+				<div id="idQuestionDiv" style='position: absolute; bottom: 10px; right: 30px; width:100%; text-align: center; z-index: 1;font-weigth:bold;color:#fff;' hidden>
+					<span>Do you like our catalogue? <a href="javascript:alert('Thank you!');" style="font-weight:bold;color:#fff;">Yes</a> / <a href="javascript:alert('Oops!');" style="font-weight:bold;color:#fff;">No</a></span>
+				</div>   
+			
         <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
-        <a-scene embedded cursor="fuse: false; rayOrigin: mouse" vr-mode-ui="enabled: false;" arjs="debugUIEnabled: false;">
+        <a-scene embedded arjs="debugUIEnabled: false; sourceType: webcam" vr-mode-ui="enabled: false">
         <a-assets>
 					<img id="animated-asset" src="images/toys_catalogue.jpg" />
         </a-assets>
@@ -34,9 +42,6 @@
 
         <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
         <a-entity camera></a-entity>
-        </a-scene>
-      <div id="idQuestionDiv" style='position: absolute; bottom: 10px; right: 30px; width:100%; text-align: center; z-index: 1;font-weigth:bold;color:#fff;' hidden>
-        <span>Do you like our catalogue? <a href="javascript:alert('Thank you!');" style="font-weight:bold;color:#fff;">Yes</a> / <a href="javascript:alert('Oops!');" style="font-weight:bold;color:#fff;">No</a></span>
-      </div>    
+        </a-scene> 
     </body>
 </html>
