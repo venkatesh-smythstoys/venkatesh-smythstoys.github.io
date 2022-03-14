@@ -16,8 +16,8 @@
 							position: absolute;
 							top: 75%;
 							z-index: 1;
-							font-size: 20px;
 							color: #fff;
+						 	left: 5%;
 					 }
 
 					 .pdg5 {
@@ -44,6 +44,22 @@
 						console.log("markerLost");
 						questionDiv.hidden = true;
 					});
+				 
+				 function onYesClick() {
+					 swal({
+						 title: "",
+						 text: "Thanks for your support",
+						 icon: "success"
+					 });
+				 };
+				 
+				 function onNoClick() {
+					 swal({
+						 title: "",
+						 text: "Oops!",
+						 icon: "info"
+					 });
+				 };
 			});
 		</script>	 
 			
@@ -59,8 +75,8 @@
 					</div>
 					<div class="row align-items-center pdg5">
 						<div class="col">
-							<button type="button" click="javascript:alert('Thank you!');" class="btn btn-success">Yes</button>
-							<button type="button" click="javascript:alert('Oops!');" class="btn btn-danger">No</button>
+							<button type="button" onclick="onYesClick();" class="btn btn-success">Yes</button>
+							<button type="button" onclick="javascript:alert('Oops!');" class="btn btn-danger">No</button>
 						</div>
 					</div>
 			</div>
