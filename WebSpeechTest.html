@@ -40,8 +40,6 @@
           listen();
       };
       
-      speak();
-      
       //speech recognizer
       var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
       var recognition = new SpeechRecognition();
@@ -63,15 +61,17 @@
           alert('That didn\'t sound right.');
         }
         console.log('Confidence: ' + event.results[0][0].confidence);
-      }
+      };
 
       recognition.onspeechend = function() {
         recognition.stop();
-      }
+      };
 
       recognition.onerror = function(event) {
         console.error('Error occurred in recognition: ' + event.error);
-      }
+      };
+      
+      speak();
       
     </script> 
   </body>
