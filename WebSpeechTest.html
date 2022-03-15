@@ -58,13 +58,13 @@
         } else if(speechResult.indexOf("no") > -1 || speechResult.indexOf("nope") > -1 || speechResult.indexOf("no need") > -1) {
           alert("Oops! sorry to hear that...");
         } else {
-          alert('That didn\'t sound right.');
+          console.log('That didn\'t sound right.');
         }
         console.log('Confidence: ' + event.results[0][0].confidence);
       };
 
       recognition.onspeechend = function() {
-        recognition.stop();
+        //recognition.stop();
       };
 
       recognition.onerror = function(event) {
