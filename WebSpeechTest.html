@@ -20,15 +20,17 @@
           break;
         }
       }
-      function speak(){
+      function speak(text2Speech, triggerListen){
           if (synth.speaking) {
               console.error('speechSynthesis.speaking');
               return;
           }
-          var text2Speech = "Would you like us to send you our catalogue? Say YES or NO";
+          //var text2Speech = "Would you like us to send you our catalogue? Say YES or NO";
           var utterThis = new SpeechSynthesisUtterance(text2Speech);
           utterThis.onend = function (event) {
-              listen();
+              if(triggerListen) {
+                listen();
+              }
               console.log('SpeechSynthesisUtterance.onend');
           }
           utterThis.onerror = function (event) {
@@ -55,8 +57,10 @@
         var speechResult = event.results[0][0].transcript.toLowerCase();
         if(speechResult.indexOf("yes") > -1 || speechResult.indexOf("yeah") > -1 || speechResult.indexOf("yup") > -1) {
           alert("Thanks... its on it's way to you");
+          speak("Thanks... its on it's way to you");
         } else if(speechResult.indexOf("no") > -1 || speechResult.indexOf("nope") > -1 || speechResult.indexOf("no need") > -1) {
           alert("Oops! sorry to hear that...");
+          speak("Oops! sorry to hear that...");
         } else {
           console.log('That didn\'t sound right.');
         }
@@ -71,7 +75,7 @@
         console.error('Error occurred in recognition: ' + event.error);
       };
       
-      speak();
+      speak("Would you like us to send you our catalogue? Say YES or NO", "X");
       
     </script> 
   </body>
