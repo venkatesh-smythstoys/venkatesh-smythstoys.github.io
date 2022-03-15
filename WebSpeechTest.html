@@ -28,6 +28,7 @@
           var text2Speech = "Would you like us to send you our catalogue? Say YES or NO";
           var utterThis = new SpeechSynthesisUtterance(text2Speech);
           utterThis.onend = function (event) {
+              listen();
               console.log('SpeechSynthesisUtterance.onend');
           }
           utterThis.onerror = function (event) {
@@ -37,7 +38,6 @@
           utterThis.pitch = 1;
           utterThis.rate = 1;
           synth.speak(utterThis);
-          listen();
       };
       
       //speech recognizer
