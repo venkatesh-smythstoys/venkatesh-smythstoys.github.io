@@ -56,10 +56,8 @@
       recognition.onresult = function(event) {
         var speechResult = event.results[0][0].transcript.toLowerCase();
         if(speechResult.indexOf("yes") > -1 || speechResult.indexOf("yeah") > -1 || speechResult.indexOf("yup") > -1) {
-          alert("Thanks... its on it's way to you");
           speak("Thanks... its on it's way to you");
         } else if(speechResult.indexOf("no") > -1 || speechResult.indexOf("nope") > -1 || speechResult.indexOf("no need") > -1) {
-          alert("Oops! sorry to hear that...");
           speak("Oops! sorry to hear that...");
         } else {
           console.log('That didn\'t sound right.');
