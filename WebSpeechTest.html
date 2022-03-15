@@ -44,6 +44,7 @@
       
       //speech recognizer
       var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+      var recognition = new SpeechRecognition();
       recognition.lang = 'en-GB';
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
