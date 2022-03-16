@@ -28,6 +28,13 @@
 					#yesBtn, #noBtn {
 						width: 100px;
 					}
+					
+					.toast {
+						position: absolute;
+   				  top: 20px;
+    				width: 10rem;
+    				left: 50%;
+					}
 
 				</style>
 	</head>
@@ -77,6 +84,7 @@
           recognition.maxAlternatives = 1;
 
           function listen() {
+						recognition.stop();
             recognition.start();
 						$('.toast').toast('show');
           };
@@ -98,6 +106,7 @@
 
           recognition.onspeechend = function() {
 						console.log("OnspeechEnd....");
+						recognition.stop();
 						$('.toast').toast('show');
             recognition.start();
           };
@@ -117,6 +126,7 @@
 
 					marker.addEventListener('markerLost', () => {
 						console.log("markerLost");
+						$('.toast').toast('hide');
             synth.cancel();
 						questionDiv.hidden = true;
 					});
