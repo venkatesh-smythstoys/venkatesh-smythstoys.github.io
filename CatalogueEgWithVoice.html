@@ -193,7 +193,6 @@
 				</div>
 			</div>	
 			
-        <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
         <a-scene embedded arjs="debugUIEnabled: false; sourceType: webcam" vr-mode-ui="enabled: false">
         <a-assets>
 					<img id="animated-asset" src="images/toys_catalogue.jpg" />
@@ -204,8 +203,6 @@
             <a-image id="image" src="#animated-asset" width="1" height="1.41" position="0 0 0" rotation="0 0 0"></a-image>
         	</a-entity>
         </a-marker>
-
-        <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
         <a-entity camera></a-entity>
         </a-scene> 
     </body>
