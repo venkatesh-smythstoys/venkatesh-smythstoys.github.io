@@ -1,80 +1,171 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width">
-    <title>Speech synthesiser</title>
-  </head>
+<html lang="en">
+    <head>
+				<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+				<title>Augmented Reality POC</title>
+				<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+				<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+				<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+				<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+				<script src="js/aframe.min.js"></script>
+				<script src="js/aframe-ar.js"></script>
+				<style>
+					 #idQuestionDiv {
+							position: absolute;
+							top: 75%;
+							z-index: 1;
+							color: #fff;
+						 	left: 5%;
+						 text-align: center;
+					 }
 
-  <body>
-    <script>
-      //speech synthesiser
-      var synth = window.speechSynthesis;
-      var voices = [];
-      voices = synth.getVoices();
-      var defaultVoice;
-      for(var voice of voices) {
-        if(voice.lang === "en-GB") {
-           defaultVoice = voice;
-          break;
-        }
-      }
-      function speak(text2Speech, triggerListen){
-          if (synth.speaking) {
-              console.error('speechSynthesis.speaking');
-              return;
+					 .pdg5 {
+							padding: 5px;
+					 }
+					
+					#yesBtn, #noBtn {
+						width: 100px;
+					}
+
+				</style>
+	</head>
+   
+    <body style='margin : 0px; overflow: hidden;'>
+	   <script>
+			 window.addEventListener('load', () => {
+				 console.log("On window load");
+         //speech synthesiser
+          var synth = window.speechSynthesis;
+          var voices = [];
+          voices = synth.getVoices();
+          var defaultVoice;
+          for(var voice of voices) {
+            if(voice.lang === "en-GB") {
+               defaultVoice = voice;
+              break;
+            }
           }
-          //var text2Speech = "Would you like us to send you our catalogue? Say YES or NO";
-          var utterThis = new SpeechSynthesisUtterance(text2Speech);
-          utterThis.onend = function (event) {
-              if(triggerListen) {
-                listen();
+          function speak(text2Speech, triggerListen){
+              if (synth.speaking) {
+                  console.error('speechSynthesis.speaking');
+                  return;
               }
-              console.log('SpeechSynthesisUtterance.onend');
-          }
-          utterThis.onerror = function (event) {
-              console.error('SpeechSynthesisUtterance.onerror');
-          }
-          utterThis.voice = defaultVoice;
-          utterThis.pitch = 1;
-          utterThis.rate = 1;
-          synth.speak(utterThis);
-      };
-      
-      //speech recognizer
-      var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-      var recognition = new SpeechRecognition();
-      recognition.lang = 'en-GB';
-      recognition.interimResults = false;
-      recognition.maxAlternatives = 1;
-      
-      function listen() {
-        recognition.start();
-      };
+              //var text2Speech = "Would you like us to send you our catalogue? Say YES or NO";
+              var utterThis = new SpeechSynthesisUtterance(text2Speech);
+              utterThis.onend = function (event) {
+                  if(triggerListen) {
+                    listen();
+                  }
+                  console.log('SpeechSynthesisUtterance.onend');
+              }
+              utterThis.onerror = function (event) {
+                  console.error('SpeechSynthesisUtterance.onerror');
+              }
+              utterThis.voice = defaultVoice;
+              utterThis.pitch = 1;
+              utterThis.rate = 1;
+              synth.speak(utterThis);
+          };
 
-      recognition.onresult = function(event) {
-        var speechResult = event.results[0][0].transcript.toLowerCase();
-        if(speechResult.indexOf("yes") > -1 || speechResult.indexOf("yeah") > -1 || speechResult.indexOf("yup") > -1) {
-          speak("Thanks... its on it's way to you");
-        } else if(speechResult.indexOf("no") > -1 || speechResult.indexOf("nope") > -1 || speechResult.indexOf("no need") > -1) {
-          speak("Oops! sorry to hear that...");
-        } else {
-          console.log('That didn\'t sound right.');
-        }
-        console.log('Confidence: ' + event.results[0][0].confidence);
-      };
+          //speech recognizer
+          var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+          var recognition = new SpeechRecognition();
+          recognition.lang = 'en-GB';
+          recognition.interimResults = false;
+          recognition.maxAlternatives = 1;
 
-      recognition.onspeechend = function() {
-        //recognition.stop();
-      };
+          function listen() {
+            recognition.start();
+          };
 
-      recognition.onerror = function(event) {
-        console.error('Error occurred in recognition: ' + event.error);
-      };
-      
-      speak("Would you like us to send you our catalogue? Say YES or NO", "X");
-      
-    </script> 
-  </body>
+          recognition.onresult = function(event) {
+            var speechResult = event.results[0][0].transcript.toLowerCase();
+            if(speechResult.indexOf("yes") > -1 || speechResult.indexOf("yeah") > -1 || speechResult.indexOf("yup") > -1) {
+              //speak("Thanks... its on it's way to you");
+              $("#yesBtn").click();
+            } else if(speechResult.indexOf("no") > -1 || speechResult.indexOf("nope") > -1 || speechResult.indexOf("no need") > -1) {
+              //speak("Oops! sorry to hear that...");
+              $("#noBtn").click();
+            } else {
+              console.log('That didn\'t sound right.');
+            }
+            console.log('Confidence: ' + event.results[0][0].confidence);
+          };
+
+          recognition.onspeechend = function() {
+            //recognition.stop();
+          };
+
+          recognition.onerror = function(event) {
+            console.error('Error occurred in recognition: ' + event.error);
+          };
+					const marker = document.querySelector('a-marker');
+					let questionDiv = document.querySelector("#idQuestionDiv");
+				 console.log(marker);
+				 console.log(questionDiv);
+					marker.addEventListener('markerFound', () => {
+							console.log("markerFound");
+              speak("Would you like us to send you our catalogue? Say YES or NO", "X");
+							questionDiv.hidden = false;
+					});
+
+					marker.addEventListener('markerLost', () => {
+						console.log("markerLost");
+            synth.cancel();
+						questionDiv.hidden = true;
+					});
+				 
+				 $("#yesBtn").click(function() {
+           synth.cancel();
+           speak("Thanks... its on it's way to you");
+					 swal({
+						 title: "",
+						 text: "Thanks... its on it's way to you",
+						 icon: "success"
+					 });
+				 });
+				 
+				 $("#noBtn").click(function() {
+           synth.cancel();
+           speak("Oops! sorry to hear that...");
+					 swal({
+						 title: "",
+						 text: "Oops! sorry to hear that...",
+						 icon: "info"
+					 });
+				 });
+			});
+		</script>	 				
+				<div id="idQuestionDiv" class="container" hidden>
+					<div class="row align-items-center pdg5">
+						<div class="col">
+							<span style="color: #fff; font-size: 25px;">Would you like us to send you our catalogue?</span>
+						</div>
+					</div>
+					<div class="row align-items-center pdg5">
+						<div class="col">
+							<button id="yesBtn" type="button" class="btn btn-success">Yes</button>
+							<button id="noBtn" type="button" class="btn btn-danger">No</button>
+						</div>
+					</div>
+			</div>
+			
+        <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
+        <a-scene embedded arjs="debugUIEnabled: false; sourceType: webcam" vr-mode-ui="enabled: false">
+        <a-assets>
+					<img id="animated-asset" src="images/toys_catalogue.jpg" />
+        </a-assets>
+
+        <a-marker markerHandler id="animated-marker" emitevents="true" type="pattern" url="data/hiro.patt">
+					<a-entity id="animated-model" position="-0.05 0 0" scale="1.1 1.1 1" rotation="-90 0 0">
+            <a-image id="image" src="#animated-asset" width="1" height="1.41" position="0 0 0" rotation="0 0 0"></a-image>
+        	</a-entity>
+        </a-marker>
+
+        <!-- use this <a-entity camera> to support multiple-markers, otherwise use <a-marker-camera> instead of </a-marker> -->
+        <a-entity camera></a-entity>
+        </a-scene> 
+    </body>
 </html>
