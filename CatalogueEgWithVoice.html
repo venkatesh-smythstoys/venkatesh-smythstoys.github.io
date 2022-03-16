@@ -29,11 +29,13 @@
 						width: 100px;
 					}
 					
-					.toast {
+					#idToastCont {
 						position: absolute;
-   				  top: 20px;
-    				width: 10rem;
+						z-index: 99;
+   				  top: 5px;
+    				width: 100%;
     				left: 50%;
+						text-align: center;
 					}
 
 				</style>
@@ -181,11 +183,13 @@
 						</div>
 					</div>
 			</div>
-			<div class="toast" data-autohide="false">
-				<div class="toast-body" style="background-color:lightblue;text-align: center;">
-					listening...
+			<div id="idToastCont">
+				<div class="toast" data-autohide="false">
+					<div class="toast-body" style="background-color:lightblue;text-align: center;">
+						listening...
+					</div>
 				</div>
-			</div>
+			</div>	
 			
         <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
         <a-scene embedded arjs="debugUIEnabled: false; sourceType: webcam" vr-mode-ui="enabled: false">
