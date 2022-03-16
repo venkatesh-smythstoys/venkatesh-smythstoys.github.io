@@ -85,7 +85,7 @@
           var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
           var recognition = new SpeechRecognition();
           recognition.lang = 'en-GB';
-				 	recognition.continuous = true;
+				 	recognition.continuous = false;
           recognition.interimResults = false;
           recognition.maxAlternatives = 1;
 
@@ -155,7 +155,7 @@
 						 title: "",
 						 text: "Thanks... its on it's way to you",
 						 icon: "success",
-						 timer: 1000
+						 timer: 1500
 					 });
 				 });
 				 
@@ -167,7 +167,7 @@
 						 title: "",
 						 text: "Oops! sorry to hear that...",
 						 icon: "info",
-						 timer: 1000
+						 timer: 1500
 					 });
 				 });
 			});
