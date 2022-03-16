@@ -78,6 +78,7 @@
 
           function listen() {
             recognition.start();
+						$('.toast').toast('show');
           };
 
           recognition.onresult = function(event) {
@@ -91,11 +92,14 @@
             } else {
               console.log('That didn\'t sound right.');
             }
+						$('.toast').toast('hide');
             console.log('Confidence: ' + event.results[0][0].confidence);
           };
 
           recognition.onspeechend = function() {
-            //recognition.stop();
+						console.log("OnspeechEnd....");
+						$('.toast').toast('show');
+            recognition.start();
           };
 
           recognition.onerror = function(event) {
@@ -119,6 +123,7 @@
 				 
 				 $("#yesBtn").click(function() {
            synth.cancel();
+					 $('.toast').toast('hide');
            speak("Thanks... its on it's way to you");
 					 swal({
 						 title: "",
@@ -130,6 +135,7 @@
 				 
 				 $("#noBtn").click(function() {
            synth.cancel();
+					 $('.toast').toast('hide');
            speak("Oops! sorry to hear that...");
 					 swal({
 						 title: "",
@@ -152,6 +158,11 @@
 							<button id="noBtn" type="button" class="btn btn-danger">No</button>
 						</div>
 					</div>
+			</div>
+			<div class="toast" data-autohide="false">
+				<div class="toast-body" style="background-color:lightblue;text-align: center;">
+					listening...
+				</div>
 			</div>
 			
         <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
