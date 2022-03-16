@@ -77,25 +77,31 @@
           };
 
           //speech recognizer
+				 	var speechListenerStarted;
           var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
           var recognition = new SpeechRecognition();
           recognition.lang = 'en-GB';
+				 	recognition.continuous = true;
           recognition.interimResults = false;
           recognition.maxAlternatives = 1;
 
           function listen() {
-						recognition.stop();
-            recognition.start();
-						$('.toast').toast('show');
+						if(!speechListenerStarted) {
+            	recognition.start();
+						}
           };
+				 
+				 // This runs when the speech recognition service starts
+					recognition.onstart = function() {
+							speechListenerStarted = "X";
+							$('.toast').toast('show');
+					};
 
           recognition.onresult = function(event) {
             var speechResult = event.results[0][0].transcript.toLowerCase();
             if(speechResult.indexOf("yes") > -1 || speechResult.indexOf("yeah") > -1 || speechResult.indexOf("yup") > -1) {
-              //speak("Thanks... its on it's way to you");
               $("#yesBtn").click();
             } else if(speechResult.indexOf("no") > -1 || speechResult.indexOf("nope") > -1 || speechResult.indexOf("no need") > -1) {
-              //speak("Oops! sorry to hear that...");
               $("#noBtn").click();
             } else {
               console.log('That didn\'t sound right.');
@@ -106,12 +112,13 @@
 
           recognition.onspeechend = function() {
 						console.log("OnspeechEnd....");
+						$('.toast').toast('hide');
 						recognition.stop();
-						$('.toast').toast('show');
-            recognition.start();
+						speechListenerStarted = "";
           };
 
           recognition.onerror = function(event) {
+						speechListenerStarted = "";
             console.error('Error occurred in recognition: ' + event.error);
           };
 					const marker = document.querySelector('a-marker');
@@ -126,6 +133,8 @@
 
 					marker.addEventListener('markerLost', () => {
 						console.log("markerLost");
+						recognition.stop();
+						speechListenerStarted = "";
 						$('.toast').toast('hide');
             synth.cancel();
 						questionDiv.hidden = true;
