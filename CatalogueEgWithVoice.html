@@ -99,6 +99,7 @@
 
           recognition.onresult = function(event) {
             var speechResult = event.results[0][0].transcript.toLowerCase();
+						console.log("result", speechResult);
             if(speechResult.indexOf("yes") > -1 || speechResult.indexOf("yeah") > -1 || speechResult.indexOf("yup") > -1) {
               $("#yesBtn").click();
             } else if(speechResult.indexOf("no") > -1 || speechResult.indexOf("nope") > -1 || speechResult.indexOf("no need") > -1) {
@@ -119,6 +120,8 @@
 
           recognition.onerror = function(event) {
 						speechListenerStarted = "";
+						recognition.stop();
+						$('.toast').toast('hide');
             console.error('Error occurred in recognition: ' + event.error);
           };
 					const marker = document.querySelector('a-marker');
