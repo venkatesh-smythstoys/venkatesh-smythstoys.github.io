@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <title>Speech synthesiser</title>
+  </head>
+
+  <body>
+    <script>
+      //speech synthesiser
+      var synth = window.speechSynthesis;
+      var voices = [];
+      voices = synth.getVoices();
+      var defaultVoice;
+      for(var voice of voices) {
+        if(voice.lang === "en-GB") {
+           defaultVoice = voice;
+          break;
+        }
+      }
+      function speak(text2Speech, triggerListen){
+          if (synth.speaking) {
+              console.error('speechSynthesis.speaking');
+              return;
+          }
+          //var text2Speech = "Would you like us to send you our catalogue? Say YES or NO";
+          var utterThis = new SpeechSynthesisUtterance(text2Speech);
+          utterThis.onend = function (event) {
+              if(triggerListen) {
+                listen();
+              }
+              console.log('SpeechSynthesisUtterance.onend');
+          }
+          utterThis.onerror = function (event) {
+              console.error('SpeechSynthesisUtterance.onerror');
+          }
+          utterThis.voice = defaultVoice;
+          utterThis.pitch = 1;
+          utterThis.rate = 1;
+          synth.speak(utterThis);
+      };
+      
+      //speech recognizer
+      var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+      var recognition = new SpeechRecognition();
+      recognition.lang = 'en-GB';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      
+      function listen() {
+        recognition.start();
+      };
+
+      recognition.onresult = function(event) {
+        var speechResult = event.results[0][0].transcript.toLowerCase();
+        if(speechResult.indexOf("yes") > -1 || speechResult.indexOf("yeah") > -1 || speechResult.indexOf("yup") > -1) {
+          speak("Thanks... its on it's way to you");
+        } else if(speechResult.indexOf("no") > -1 || speechResult.indexOf("nope") > -1 || speechResult.indexOf("no need") > -1) {
+          speak("Oops! sorry to hear that...");
+        } else {
+          console.log('That didn\'t sound right.');
+        }
+        console.log('Confidence: ' + event.results[0][0].confidence);
+      };
+
+      recognition.onspeechend = function() {
+        //recognition.stop();
+      };
+
+      recognition.onerror = function(event) {
+        console.error('Error occurred in recognition: ' + event.error);
+      };
+      
+      speak("Would you like us to send you our catalogue? Say YES or NO", "X");
+      
+    </script> 
+  </body>
+</html>
