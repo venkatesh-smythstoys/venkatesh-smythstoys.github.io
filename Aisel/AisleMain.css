@@ -1,0 +1,27 @@
+#containerDiv {
+  position: absolute;
+  top: 5%;
+  z-index: 99;
+  color: #fff;
+}
+.pdg5 {
+  padding: 5px;
+}
+.mrgnr10 {
+  margin-right: 10px;
+}
+.mrgnt10 {
+  margin-top: 10px;
+}
+#searchInput {
+  width: 13.5rem;
+}
+table, td, th {
+  padding: 8px
+}
+th {
+  background-color: #3e96f3;
+}
+tr {
+  border-bottom: 1px solid #ddd;
+}
