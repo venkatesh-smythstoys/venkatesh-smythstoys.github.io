@@ -9,44 +9,41 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="js/aframe.min.js"></script>
+		<script src="js/aframe-ar.js"></script>
     <script src="AisleMain.js"></script>
     <style>
-      #idQuestionDiv {
-      position: absolute;
-      z-index: 1;
-      left: 5%;
-      }
       .pdg5 {
-      padding: 5px;
+		    padding: 5px;
       }
       .mrgnr10 {
-      margin-right: 10px;
+		    margin-right: 10px;
       }
       .mrgnt10 {
-      margin-top: 10px;
+		    margin-top: 10px;
       }
       #searchInput {
-      width: 15rem;
+		    width: 13.5rem;
       }
       table, td, th {
-      padding: 8px
+		    padding: 8px
       }
       th {
-      background-color: #E7E9EB;
+		    background-color: #E7E9EB;
       }
       tr {
-      border-bottom: 1px solid #ddd;
+		    border-bottom: 1px solid #ddd;
       }
     </style>
   </head>
   <body style='margin : 0px; overflow: hidden;'>
     <div class="container">
-      <div id="searchDiv" class="d-flex">
+      <div id="searchDiv" class="d-flex mrgnt10">
         <input id="searchInput" type="text" class="mrgnr10" placeholder="Enter your search text here...">
         <button id="searchBtn" class="mrgnr10 btn btn-primary" type="button">Search</button>
         <button id="clearBtn" class="mrgnr10 btn btn-danger" type="button">Clear</button>
       </div>
-      <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex justify-content-between align-items-center mrgnt10">
         <div>
           <p id="aisleTitle" class="font-weight-bold mrgnt10">Aisle 1</p>
         </div>
@@ -58,17 +55,8 @@
       </div>
       <div id="idTableContainer"></div>
     </div>
-    <!-- <a-scene embedded arjs="debugUIEnabled: false; sourceType: webcam" vr-mode-ui="enabled: false">
-      <a-assets>
-      	<img id="animated-asset" src="images/toys_catalogue.jpg" />
-      </a-assets>
-      
-      <a-marker markerHandler id="animated-marker" emitevents="true" type="pattern" url="data/hiro.patt">
-      	<a-entity id="animated-model" position="-0.05 0 0" scale="1.1 1.1 1" rotation="-90 0 0">
-      	<a-image id="image" src="#animated-asset" width="1" height="1.41" position="0 0 0" rotation="0 0 0"></a-image>
-      	</a-entity>
-      </a-marker>
+    <a-scene embedded arjs="debugUIEnabled: false; sourceType: webcam" vr-mode-ui="enabled: false">
       <a-entity camera></a-entity>
-           </a-scene> -->
+    </a-scene>
   </body>
 </html>
