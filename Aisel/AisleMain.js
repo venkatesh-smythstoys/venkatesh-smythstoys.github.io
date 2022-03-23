@@ -29,7 +29,7 @@ window.addEventListener('load', () => {
     function buildTable(tableTitle, dataForBinding, fromSearch) {
         //Create a HTML Table element.
         var table = $("<table />");
-        //table[0].border = "1";
+        table[0].width = "100%";
         var columns = fromSearch ? searchResultCols : defaultColumns;
         var columnCount = columns.length;
 
@@ -117,6 +117,13 @@ window.addEventListener('load', () => {
             }
         }
     });
+	
+	$("#searchInput").keypress(function(event){
+	  var keycode = (event.keyCode ? event.keyCode : event.which);
+	  if(keycode == '13'){
+		$("#searchBtn").click();
+	  }
+	});
 
     $("#clearBtn").click(function() {
         $("#aisle1").click();
